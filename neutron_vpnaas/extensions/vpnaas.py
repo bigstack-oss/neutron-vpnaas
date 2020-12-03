@@ -28,6 +28,28 @@ from neutron.api.v2 import resource_helper
 from neutron_vpnaas._i18n import _
 
 
+class RouteInUseByVPN(nexception.InUse):
+    """Operational error indicating a route is used for VPN.
+
+    :param destinations: Destination CIDRs that are peers for VPN
+    """
+    message = _("Route(s) to %(destinations)s are used for VPN")
+
+
+class VPNGatewayNotReady(nexception.BadRequest):
+    message = _("VPN gateway not ready")
+
+
+class VPNGatewayInError(nexception.Conflict):
+    message = _("VPN gateway is in ERROR state. "
+                "Please remove all errored VPN services and try again.")
+
+
+class NoVPNAgentAvailable(nexception.ServiceUnavailable):
+    message = _("No VPN agent available")
+
+
+
 class VPNServiceNotFound(nexception.NotFound):
     message = _("VPNService %(vpnservice_id)s could not be found")
 

@@ -15,12 +15,29 @@ import neutron.services.provider_configuration
 import neutron_vpnaas.services.vpn.agent
 import neutron_vpnaas.services.vpn.device_drivers.ipsec
 import neutron_vpnaas.services.vpn.device_drivers.strongswan_ipsec
+import neutron_vpnaas.services.vpn.ovn_agent
 
 
 def list_agent_opts():
     return [
         ('vpnagent',
          neutron_vpnaas.services.vpn.agent.vpn_agent_opts),
+        ('ipsec',
+         neutron_vpnaas.services.vpn.device_drivers.ipsec.ipsec_opts),
+        ('strongswan',
+         neutron_vpnaas.services.vpn.device_drivers.strongswan_ipsec.
+         strongswan_opts),
+        ('pluto',
+         neutron_vpnaas.services.vpn.device_drivers.ipsec.pluto_opts)
+    ]
+
+
+def list_ovn_agent_opts():
+    return [
+        ('vpnagent',
+         neutron_vpnaas.services.vpn.ovn_agent.VPN_AGENT_OPTS),
+        ('ovs',
+         neutron_vpnaas.services.vpn.ovn_agent.OVS_OPTS),
         ('ipsec',
          neutron_vpnaas.services.vpn.device_drivers.ipsec.ipsec_opts),
         ('strongswan',
