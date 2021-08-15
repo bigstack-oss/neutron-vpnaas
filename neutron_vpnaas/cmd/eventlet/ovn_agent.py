@@ -1,4 +1,4 @@
-# Copyright (c) 2014 OpenStack Foundation.
+# Copyright 2020, SysEleven GmbH
 # All Rights Reserved.
 #
 #    Licensed under the Apache License, Version 2.0 (the "License"); you may
@@ -12,21 +12,10 @@
 #    WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
 #    License for the specific language governing permissions and limitations
 #    under the License.
+#
 
-"""
-The module provides all database models at current HEAD.
-
-Its purpose is to create comparable metadata with current database schema.
-Based on this comparison database can be healed with healing migration.
-
-"""
-
-from neutron.db.migration.models import head
-
-from neutron_vpnaas.db.vpn import vpn_agentschedulers_db  # noqa
-from neutron_vpnaas.db.vpn import vpn_db  # noqa
-from neutron_vpnaas.db.vpn import vpn_ext_gw_db  # noqa
+from neutron_vpnaas.services.vpn import ovn_agent
 
 
-def get_metadata():
-    return head.model_base.BASEV2.metadata
+def main():
+    ovn_agent.main()

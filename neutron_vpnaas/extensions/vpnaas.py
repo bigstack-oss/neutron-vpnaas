@@ -173,6 +173,27 @@ class EndpointGroupInUse(nexception.BadRequest):
     message = _("Endpoint group %(group_id)s is in use and cannot be deleted")
 
 
+class RouteInUseByVPN(nexception.InUse):
+    """Operational error indicating a route is used for VPN.
+
+    :param destinations: Destination CIDRs that are peers for VPN
+    """
+    message = _("Route(s) to %(destinations)s are used for VPN")
+
+
+class VPNGatewayNotReady(nexception.BadRequest):
+    message = _("VPN gateway not ready")
+
+
+class VPNGatewayInError(nexception.Conflict):
+    message = _("VPN gateway is in ERROR state."
+                " Please remove all errored VPN services and try again.")
+
+
+class NoVPNAgentAvailable(nexception.ServiceUnavailable):
+    message = _("No VPN agent available")
+
+
 def _validate_subnet_list_or_none(data, key_specs=None):
     if data is not None:
         return validators.validate_subnet_list(data, key_specs)
