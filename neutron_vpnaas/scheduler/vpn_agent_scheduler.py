@@ -52,12 +52,18 @@ class VPNScheduler(object):
         :param router_ids: the list of routers to be checked for scheduling
         :returns: the list of routers to be scheduled
         """
+        routers = []
         unscheduled_router_ids = plugin.get_unscheduled_vpn_routers(
             context, router_ids=router_ids)
         if unscheduled_router_ids:
-            return self.l3_plugin.get_routers(
-                context, filters={'id': unscheduled_router_ids})
-        return []
+            for i in unscheduled_router_ids:
+                router = {}
+                router['id'] = i
+                routers.append(router)
+            #return self.l3_plugin.get_routers(
+            #    context, filters={'id': unscheduled_router_ids})
+        # return []
+        return routers
 
     def _get_routers_can_schedule(self, context, plugin, routers, vpn_agent):
         """Get the subset of routers whose VPN services can be scheduled on
@@ -108,7 +114,8 @@ class VPNScheduler(object):
                       'agent_id': chosen_agent})
             return chosen_agent
 
-        sync_router = self.l3_plugin.get_router(context, router_id)
+        #sync_router = self.l3_plugin.get_router(context, router_id)
+        sync_router = None
         candidates = candidates or self._get_candidates(
             plugin, context, sync_router)
         if not candidates:

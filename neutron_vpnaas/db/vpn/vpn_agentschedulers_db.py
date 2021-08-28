@@ -15,6 +15,8 @@
 #    under the License.
 
 import random
+import subprocess
+import json
 
 from neutron.extensions import router_availability_zone as router_az
 from neutron import worker as neutron_worker
@@ -81,6 +83,25 @@ class VPNAgentSchedulerDbMixin(
     def core_plugin(self):
         return directory.get_plugin()
 
+    def agent_cache(self):
+        output = subprocess.check_output("/usr/sbin/hex_sdk os_neutron_agent_list", shell=True)
+        obj = json.loads(output)
+        return obj
+
+    def get_agents(self, filters=None):
+        filters = filters or {}
+        agent_list = []
+        agents = self.agent_cache()
+        for agent in agents:
+            agent_dict = agents[agent]
+            if all(agent_dict[k] in v for k, v in filters.items()):
+                agent_list.append(agent_dict)
+        return agent_list
+
+    def get_agent(self, id):
+        agents = self.agent_cache()
+        return agents[id]
+
     def add_periodic_vpn_agent_status_check(self):
         if not cfg.CONF.allow_automatic_vpnagent_failover:
             LOG.info("Skipping periodic VPN agent status check because "
@@ -110,8 +131,9 @@ class VPNAgentSchedulerDbMixin(
             for binding in down_bindings:
                 if binding.vpn_agent_id in agents_back_online:
                     continue
-                agent = self.core_plugin.get_agent(context,
-                                                   binding.vpn_agent_id)
+                #agent = self.core_plugin.get_agent(context,
+                #                                   binding.vpn_agent_id)
+                agent = self.get_agent(binding.vpn_agent_id)
                 if agent['alive']:
                     agents_back_online.add(binding.vpn_agent_id)
                     continue
@@ -205,7 +227,8 @@ class VPNAgentSchedulerDbMixin(
         """Add a VPN agent to host VPN services of a router."""
         with db_api.CONTEXT_WRITER.using(context):
             router = self.l3_plugin.get_router(context, router_id)
-            agent = self.core_plugin.get_agent(context, agent_id)
+            # agent = self.core_plugin.get_agent(context, agent_id)
+            agent = self.get_agent(agent_id)
             self.validate_agent_router_combination(context, agent, router)
             if not self.check_agent_router_scheduling_needed(
                     context, agent, router):
@@ -234,7 +257,8 @@ class VPNAgentSchedulerDbMixin(
         until there is an update which leads to re-schedule or the router is
         added to another agent manually.
         """
-        agent = self.core_plugin.get_agent(context, agent_id)
+        # agent = self.core_plugin.get_agent(context, agent_id)
+        agent = self.get_agent(agent_id)
 
         self._unbind_router(context, router_id, agent_id)
 
@@ -324,7 +348,8 @@ class VPNAgentSchedulerDbMixin(
         query = query.filter(RouterVPNAgentBinding.router_id.in_(router_ids))
 
         filters = {'id': [binding.vpn_agent_id for binding in query]}
-        vpn_agents = self.core_plugin.get_agents(context, filters=filters)
+        # vpn_agents = self.core_plugin.get_agents(context, filters=filters)
+        vpn_agents = self.get_agents(filters=filters)
         if active is not None:
             vpn_agents = [agent
                           for agent in vpn_agents
@@ -339,7 +364,8 @@ class VPNAgentSchedulerDbMixin(
         filters = {'agent_type': [AGENT_TYPE_VPN]}
         if host is not None:
             filters['host'] = [host]
-        vpn_agents = self.core_plugin.get_agents(context, filters=filters)
+        # vpn_agents = self.core_plugin.get_agents(context, filters=filters)
+        vpn_agents = self.get_agents(filters=filters)
         if active is None:
             return vpn_agents
         else:
