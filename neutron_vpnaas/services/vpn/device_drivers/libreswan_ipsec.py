@@ -91,7 +91,7 @@ class LibreSwanProcess(ipsec.OpenSwanProcess):
         self._ensure_needed_files()
 
         # Load the ipsec kernel module if not loaded
-        self._ipsec_execute(['_stackmanager', 'start'])
+        self._ipsec_execute(['_stackmanager', 'start', '--rundir', '/var/run'])
         # checknss creates nssdb only if it is missing
         # It is added in Libreswan version v3.10
         # For prior versions use initnss
@@ -101,16 +101,17 @@ class LibreSwanProcess(ipsec.OpenSwanProcess):
             self._ipsec_execute(['initnss'])
 
     def get_status(self):
-        return self._ipsec_execute(['whack', '--status'],
+        return self._ipsec_execute(['whack', '--status', '--rundir', '/var/run'],
                                    extra_ok_codes=[1, 3])
 
     def start_pluto(self):
         cmd = ['pluto',
-               '--use-netkey',
+               '--rundir',
+               '/var/run',
                '--uniqueids']
 
         if self.conf.ipsec.enable_detailed_logging:
-            cmd += ['--perpeerlog', '--perpeerlogbase', self.log_dir]
+            cmd += ['--logfile', self.log_dir + '/pluto.log']
         self._ipsec_execute(cmd)
 
     def add_ipsec_connection(self, nexthop, conn_id):
@@ -121,17 +122,17 @@ class LibreSwanProcess(ipsec.OpenSwanProcess):
     def start_whack_listening(self):
         # NOTE(huntxu): This is a workaround for with a weak (len<8) secret,
         # "ipsec whack --listen" will exit with 3.
-        self._ipsec_execute(['whack', '--listen'], extra_ok_codes=[3])
+        self._ipsec_execute(['whack', '--listen', '--rundir', '/var/run'], extra_ok_codes=[3])
 
     def shutdown_whack(self):
-        self._ipsec_execute(['whack', '--shutdown'])
+        self._ipsec_execute(['whack', '--shutdown', '--rundir', '/var/run'])
 
     def initiate_connection(self, conn_name):
         self._ipsec_execute(
-            ['whack', '--name', conn_name, '--asynchronous', '--initiate'])
+            ['whack', '--name', conn_name, '--asynchronous', '--initiate', '--rundir', '/var/run'])
 
     def terminate_connection(self, conn_name):
-        self._ipsec_execute(['whack', '--name', conn_name, '--terminate'])
+        self._ipsec_execute(['whack', '--name', conn_name, '--terminate', '--rundir', '/var/run'])
 
 
 class LibreSwanDriver(ipsec.IPsecDriver):

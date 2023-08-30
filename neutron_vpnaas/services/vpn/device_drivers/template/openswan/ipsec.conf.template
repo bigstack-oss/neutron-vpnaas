@@ -1,6 +1,7 @@
 # Configuration for {{vpnservice.id}}
 config setup
-    nat_traversal=yes
+    protostack=netkey
+    #nat_traversal=yes
     virtual_private={{virtual_privates}}
 conn %default
     keylife=60m
