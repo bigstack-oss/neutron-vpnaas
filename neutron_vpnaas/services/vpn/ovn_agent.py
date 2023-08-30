@@ -52,7 +52,7 @@ OVS_OPTS = [
 
 
 def register_opts(conf):
-    common_config.register_common_config_options()
+    #common_config.register_common_config_options()
     agent_config.register_interface_driver_opts_helper(conf)
     agent_config.register_interface_opts(conf)
     agent_config.register_availability_zone_opts_helper(conf)
