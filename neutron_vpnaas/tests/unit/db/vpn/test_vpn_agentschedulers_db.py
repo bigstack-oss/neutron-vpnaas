@@ -66,7 +66,7 @@ class VPNAgentSchedulerTestMixIn:
         else:
             return testlib_api.create_request(
                 path, body, content_type, method, query_string=query_string,
-                context=context.Context('', 'tenant_id'))
+                context=context.Context('', 'project_id'))
 
     def _path_create_request(self, path, data, admin_context=True):
         return self._path_req(path, method='POST', data=data,

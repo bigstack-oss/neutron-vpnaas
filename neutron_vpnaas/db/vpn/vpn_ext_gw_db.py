@@ -169,7 +169,7 @@ class VPNExtGWPlugin_db:
             return None
         gateway = {
             'id': gateway_db['id'],
-            'tenant_id': gateway_db['tenant_id'],
+            'project_id': gateway_db['project_id'],
             'router_id': gateway_db['router_id'],
             'status': gateway_db['status'],
         }
@@ -211,7 +211,7 @@ class VPNExtGWPlugin_db:
         with db_api.CONTEXT_WRITER.using(context):
             gateway_db = VPNExtGW(
                 id=uuidutils.generate_uuid(),
-                tenant_id=info['tenant_id'],
+                project_id=info['project_id'],
                 router_id=info['router_id'],
                 status=lib_constants.PENDING_CREATE,
                 gw_port_id=info.get('gw_port_id'),

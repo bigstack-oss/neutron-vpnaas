@@ -97,7 +97,7 @@ class VPNTestMixin:
                     'value': lifetime_value},
                 'ike_version': ike_version,
                 'pfs': pfs,
-                'tenant_id': self._project_id
+                'project_id': self._project_id
                 }}
         if kwargs.get('description') is not None:
             data['ikepolicy']['description'] = kwargs['description']
@@ -160,7 +160,7 @@ class VPNTestMixin:
                                 'lifetime': {'units': lifetime_units,
                                              'value': lifetime_value},
                                 'pfs': pfs,
-                                'tenant_id': self._project_id}}
+                                'project_id': self._project_id}}
         if kwargs.get('description') is not None:
             data['ipsecpolicy']['description'] = kwargs['description']
         ipsecpolicy_req = self.new_create_request('ipsecpolicies', data, fmt)
@@ -204,22 +204,22 @@ class VPNTestMixin:
                            admin_state_up,
                            router_id, subnet_id,
                            expected_res_status=None, **kwargs):
-        tenant_id = kwargs.get('tenant_id', self._project_id)
+        project_id = kwargs.get('project_id', self._project_id)
         data = {'vpnservice': {'name': name,
                                'subnet_id': subnet_id,
                                'router_id': router_id,
                                'admin_state_up': admin_state_up,
-                               'tenant_id': tenant_id}}
+                               'project_id': project_id}}
         if kwargs.get('description') is not None:
             data['vpnservice']['description'] = kwargs['description']
         if kwargs.get('flavor_id') is not None:
             data['vpnservice']['flavor_id'] = kwargs['flavor_id']
         vpnservice_req = self.new_create_request('vpnservices', data, fmt)
         if (kwargs.get('set_context') and
-                'tenant_id' in kwargs):
+                'project_id' in kwargs):
             # create a specific auth context for this request
             vpnservice_req.environ['neutron.context'] = context.Context(
-                '', kwargs['tenant_id'])
+                '', kwargs['project_id'])
         vpnservice_res = vpnservice_req.get_response(self.ext_api)
         if expected_res_status:
             self.assertEqual(vpnservice_res.status_int, expected_res_status)
@@ -323,7 +323,7 @@ class VPNTestMixin:
                                       'ikepolicy_id': ikepolicy_id,
                                       'ipsecpolicy_id': ipsecpolicy_id,
                                       'admin_state_up': admin_state_up,
-                                      'tenant_id': self._project_id,
+                                      'project_id': self._project_id,
                                       'local_ep_group_id': local_ep_group_id,
                                       'peer_ep_group_id': peer_ep_group_id}
         }
@@ -505,7 +505,7 @@ class TestVpnaas(VPNPluginDbTestCase):
                 ('phase1_negotiation_mode', 'main'),
                 ('ike_version', 'v1'),
                 ('pfs', 'group5'),
-                ('tenant_id', self._project_id)]
+                ('project_id', self._project_id)]
         lifetime = {
             'units': 'seconds',
             'value': 3600}
@@ -530,7 +530,7 @@ class TestVpnaas(VPNPluginDbTestCase):
                 ('phase1_negotiation_mode', 'aggressive'),
                 ('ike_version', 'v1'),
                 ('pfs', 'group5'),
-                ('tenant_id', self._project_id)]
+                ('project_id', self._project_id)]
         lifetime = {
             'units': 'seconds',
             'value': 3600}
@@ -556,7 +556,7 @@ class TestVpnaas(VPNPluginDbTestCase):
                 ('phase1_negotiation_mode', 'main'),
                 ('ike_version', 'v1'),
                 ('pfs', 'group5'),
-                ('tenant_id', self._project_id)]
+                ('project_id', self._project_id)]
         lifetime = {
             'units': 'seconds',
             'value': 3600}
@@ -577,7 +577,7 @@ class TestVpnaas(VPNPluginDbTestCase):
                 ('phase1_negotiation_mode', 'main'),
                 ('ike_version', 'v1'),
                 ('pfs', 'group5'),
-                ('tenant_id', self._project_id)]
+                ('project_id', self._project_id)]
         lifetime = {
             'units': 'seconds',
             'value': 3600}
@@ -638,7 +638,7 @@ class TestVpnaas(VPNPluginDbTestCase):
                 ('phase1_negotiation_mode', 'main'),
                 ('ike_version', 'v1'),
                 ('pfs', 'group5'),
-                ('tenant_id', self._project_id),
+                ('project_id', self._project_id),
                 ('lifetime', {'units': 'seconds',
                               'value': 60})]
         with self.ikepolicy(name=name) as ikepolicy:
@@ -661,7 +661,7 @@ class TestVpnaas(VPNPluginDbTestCase):
                 ('phase1_negotiation_mode', 'aggressive'),
                 ('ike_version', 'v1'),
                 ('pfs', 'group5'),
-                ('tenant_id', self._project_id),
+                ('project_id', self._project_id),
                 ('lifetime', {'units': 'seconds',
                               'value': 60})]
         with self.ikepolicy(name=name) as ikepolicy:
@@ -747,7 +747,7 @@ class TestVpnaas(VPNPluginDbTestCase):
                 ('encapsulation_mode', 'tunnel'),
                 ('transform_protocol', 'esp'),
                 ('pfs', 'group5'),
-                ('tenant_id', self._project_id)]
+                ('project_id', self._project_id)]
         lifetime = {
             'units': 'seconds',
             'value': 3600}
@@ -778,7 +778,7 @@ class TestVpnaas(VPNPluginDbTestCase):
                 ('encapsulation_mode', 'tunnel'),
                 ('transform_protocol', 'esp'),
                 ('pfs', 'group5'),
-                ('tenant_id', self._project_id)]
+                ('project_id', self._project_id)]
         lifetime = {
             'units': 'seconds',
             'value': 3600}
@@ -799,7 +799,7 @@ class TestVpnaas(VPNPluginDbTestCase):
                 ('encapsulation_mode', 'tunnel'),
                 ('transform_protocol', 'esp'),
                 ('pfs', 'group5'),
-                ('tenant_id', self._project_id)]
+                ('project_id', self._project_id)]
         lifetime = {
             'units': 'seconds',
             'value': 3600}
@@ -857,7 +857,7 @@ class TestVpnaas(VPNPluginDbTestCase):
                 ('encapsulation_mode', 'tunnel'),
                 ('transform_protocol', 'esp'),
                 ('pfs', 'group5'),
-                ('tenant_id', self._project_id),
+                ('project_id', self._project_id),
                 ('lifetime', {'units': 'seconds',
                               'value': 60})]
         with self.ipsecpolicy(name=name) as ipsecpolicy:
@@ -948,7 +948,7 @@ class TestVpnaas(VPNPluginDbTestCase):
                     'description': 'my-vpn-service',
                     'admin_state_up': True,
                     'status': 'PENDING_CREATE',
-                    'tenant_id': self._project_id, }
+                    'project_id': self._project_id, }
 
         expected.update(extras)
         with self.subnet(cidr='10.2.0.0/24') as subnet:
@@ -1259,7 +1259,7 @@ class TestVpnaas(VPNPluginDbTestCase):
                 'peer_cidrs': ['192.168.2.0/24', '192.168.3.0/24'],
                 'initiator': 'bi-directional',
                 'mtu': 1500,
-                'tenant_id': self._project_id,
+                'project_id': self._project_id,
                 'psk': 'abcd',
                 'status': 'PENDING_CREATE',
                 'admin_state_up': True}
@@ -1366,7 +1366,7 @@ class TestVpnaas(VPNPluginDbTestCase):
                 'peer_cidrs': ['192.168.2.0/24', '192.168.3.0/24'],
                 'initiator': 'bi-directional',
                 'mtu': 1500,
-                'tenant_id': self._project_id,
+                'project_id': self._project_id,
                 'psk': 'abcd',
                 'status': 'ACTIVE',
                 'admin_state_up': True,
@@ -1449,7 +1449,7 @@ class TestVpnaas(VPNPluginDbTestCase):
                 'peer_cidrs': ['192.168.2.0/24', '192.168.3.0/24'],
                 'initiator': 'bi-directional',
                 'mtu': 1500,
-                'tenant_id': self._project_id,
+                'project_id': self._project_id,
                 'psk': 'abcd',
                 'status': 'PENDING_CREATE',
                 'admin_state_up': True}
@@ -1855,7 +1855,7 @@ class TestVpnDatabase(base.NeutronDbPluginV2TestCase, NeutronResourcesMixin):
 
     def prepare_service_info(self, private_subnet, router):
         subnet_id = private_subnet['id'] if private_subnet else None
-        return {'vpnservice': {'tenant_id': self.project_id,
+        return {'vpnservice': {'project_id': self.project_id,
                                'name': 'my-service',
                                'description': 'new service',
                                'subnet_id': subnet_id,
@@ -1910,7 +1910,7 @@ class TestVpnDatabase(base.NeutronDbPluginV2TestCase, NeutronResourcesMixin):
         self.assertDictSupersetOf(expected, mod_service)
 
     def prepare_endpoint_info(self, group_type, endpoints):
-        return {'endpoint_group': {'tenant_id': self.project_id,
+        return {'endpoint_group': {'project_id': self.project_id,
                                    'name': 'my endpoint group',
                                    'description': 'my description',
                                    'type': group_type,
@@ -2055,7 +2055,7 @@ class TestVpnDatabase(base.NeutronDbPluginV2TestCase, NeutronResourcesMixin):
         expected_groups = [expected1, expected2]
         actual_groups = self.plugin.get_endpoint_groups(
             self.context,
-            fields=('type', 'tenant_id', 'endpoints',
+            fields=('type', 'project_id', 'endpoints',
                     'name', 'description', 'id'))
         for expected_group, actual_group in zip(expected_groups,
                                                 actual_groups):
@@ -2090,7 +2090,7 @@ class TestVpnDatabase(base.NeutronDbPluginV2TestCase, NeutronResourcesMixin):
             self.context, _uuid(), group_updates)
 
     def prepare_ike_policy_info(self):
-        return {'ikepolicy': {'tenant_id': self.project_id,
+        return {'ikepolicy': {'project_id': self.project_id,
                               'name': 'ike policy',
                               'description': 'my ike policy',
                               'auth_algorithm': 'sha1',
@@ -2108,7 +2108,7 @@ class TestVpnDatabase(base.NeutronDbPluginV2TestCase, NeutronResourcesMixin):
         self.assertDictSupersetOf(expected, new_ike_policy)
 
     def prepare_ipsec_policy_info(self):
-        return {'ipsecpolicy': {'tenant_id': self.project_id,
+        return {'ipsecpolicy': {'project_id': self.project_id,
                                 'name': 'ipsec policy',
                                 'description': 'my ipsec policy',
                                 'auth_algorithm': 'sha1',
@@ -2171,7 +2171,7 @@ class TestVpnDatabase(base.NeutronDbPluginV2TestCase, NeutronResourcesMixin):
                                           'ikepolicy_id': ike_policy_id,
                                           'ipsecpolicy_id': ipsec_policy_id,
                                           'admin_state_up': True,
-                                          'tenant_id': self._project_id,
+                                          'project_id': self._project_id,
                                           'local_ep_group_id': None,
                                           'peer_ep_group_id': None}}
 
