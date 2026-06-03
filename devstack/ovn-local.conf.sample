@@ -14,7 +14,7 @@ LOGFILE="/opt/stack/logs/devstacklog.txt"
 
 enable_service ovn-northd
 enable_service ovn-controller
-enable_service q-ovn-metadata-agent
+enable_service q-ovn-agent
 enable_service q-ovn-vpn-agent
 enable_service q-svc
 enable_service q-log
