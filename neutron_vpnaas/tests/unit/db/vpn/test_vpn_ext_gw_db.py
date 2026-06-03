@@ -71,7 +71,7 @@ class TestVPNExtGw(VPNOVNPluginDbTestCase):
             gateway = {'gateway': {
                 'router_id': router['router']['id'],
                 gw_key: port['port']['id'],
-                'tenant_id': self.project_id
+                'project_id': self.project_id
             }}
             admin_context = context.get_admin_context()
             plugin.create_gateway(admin_context, gateway)
@@ -96,7 +96,7 @@ class TestVPNExtGw(VPNOVNPluginDbTestCase):
             gateway = {'gateway': {
                 'router_id': router['router']['id'],
                 'transit_port_id': transit_port['port']['id'],
-                'tenant_id': self.project_id
+                'project_id': self.project_id
             }}
             admin_context = context.get_admin_context()
             plugin.create_gateway(admin_context, gateway)
@@ -109,7 +109,7 @@ class TestVPNExtGw(VPNOVNPluginDbTestCase):
             gateway = {'gateway': {
                 'router_id': router['router']['id'],
                 'transit_subnet_id': subnet['subnet']['id'],
-                'tenant_id': self.project_id
+                'project_id': self.project_id
             }}
             admin_context = context.get_admin_context()
             plugin.create_gateway(admin_context, gateway)
@@ -125,7 +125,7 @@ class TestVPNExtGw(VPNOVNPluginDbTestCase):
             gateway = {'gateway': {
                 'router_id': router['router']['id'],
                 'transit_network_id': network['network']['id'],
-                'tenant_id': self.project_id
+                'project_id': self.project_id
             }}
             admin_context = context.get_admin_context()
             plugin.create_gateway(admin_context, gateway)
@@ -165,7 +165,7 @@ class TestVPNExtGwDB(base.NeutronDbPluginV2TestCase,
         private_subnet, router = self.create_basic_topology()
         gateway = {'gateway': {
             'router_id': router['id'],
-            'tenant_id': self.project_id
+            'project_id': self.project_id
         }}
         gwdb = VPNExtGWPlugin_db()
         new_gateway = gwdb.create_gateway(self.context, gateway)
@@ -179,7 +179,7 @@ class TestVPNExtGwDB(base.NeutronDbPluginV2TestCase,
         # create gateway
         gateway = {'gateway': {
             'router_id': router['id'],
-            'tenant_id': self.project_id
+            'project_id': self.project_id
         }}
         new_gateway = gwdb.create_gateway(self.context, gateway)
 
@@ -204,7 +204,7 @@ class TestVPNExtGwDB(base.NeutronDbPluginV2TestCase,
         # create gateway
         gateway = {'gateway': {
             'router_id': router['id'],
-            'tenant_id': self.project_id
+            'project_id': self.project_id
         }}
         new_gateway = gwdb.create_gateway(self.context, gateway)
         self.assertIsNotNone(new_gateway)

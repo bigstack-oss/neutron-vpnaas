@@ -81,7 +81,7 @@ class OvnSiteInfo:
         router_data = {
             'name': 'r%d' % self.index,
             'admin_state_up': True,
-            'project_id': self.parent._tenant_id,
+            'project_id': self.parent._project_id,
             'external_gateway_info': {
                 'enable_snat': True,
                 'network_id': self.ext_net['id'],
@@ -110,7 +110,7 @@ class OvnSiteInfo:
     def create_vpnservice(self):
         plugin = self.parent.vpn_plugin
         data = {
-            'tenant_id': self.parent._tenant_id,
+            'project_id': self.parent._project_id,
             'name': 'my-service',
             'description': 'new service',
             'subnet_id': self.local_sub['id'],
@@ -123,7 +123,7 @@ class OvnSiteInfo:
         self.local_addr = self.vpnservice['external_v4_ip']
 
         data = {
-            'tenant_id': self.parent._tenant_id,
+            'project_id': self.parent._project_id,
             'name': 'ikepolicy%d' % self.index,
             'description': '',
             'auth_algorithm': 'sha256',
@@ -137,7 +137,7 @@ class OvnSiteInfo:
                                                  {'ikepolicy': data})
 
         data = {
-            'tenant_id': self.parent._tenant_id,
+            'project_id': self.parent._project_id,
             'name': 'ipsecpolicy%d' % self.index,
             'description': '',
             'transform_protocol': 'esp',
@@ -152,7 +152,7 @@ class OvnSiteInfo:
 
     def create_site_connection(self, peer_addr, peer_cidr):
         data = {
-            'tenant_id': self.parent._tenant_id,
+            'project_id': self.parent._project_id,
             'name': 'conn%d' % self.index,
             'description': '',
             'local_id': self.local_addr,

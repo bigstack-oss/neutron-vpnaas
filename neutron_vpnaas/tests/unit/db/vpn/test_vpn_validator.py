@@ -46,7 +46,7 @@ class TestVpnValidation(base.BaseTestCase):
         self.core_plugin = mock.Mock()
         directory.add_plugin(nconstants.CORE, self.core_plugin)
         directory.add_plugin(nconstants.L3, self.l3_plugin)
-        self.context = n_ctx.Context('some_user', 'some_tenant')
+        self.context = n_ctx.Context('some_user', 'some_project')
         self.validator = vpn_validator.VpnReferenceValidator()
         self.router = mock.Mock()
         self.router.gw_port = {'fixed_ips': [{'ip_address': '10.0.0.99'}]}

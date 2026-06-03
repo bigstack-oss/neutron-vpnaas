@@ -94,7 +94,7 @@ class VPNPluginDb(vpnaas.VPNPluginBase,
     def _make_ipsec_site_connection_dict(self, ipsec_site_conn, fields=None):
 
         res = {'id': ipsec_site_conn['id'],
-               'tenant_id': ipsec_site_conn['tenant_id'],
+               'project_id': ipsec_site_conn['project_id'],
                'name': ipsec_site_conn['name'],
                'description': ipsec_site_conn['description'],
                'peer_address': ipsec_site_conn['peer_address'],
@@ -171,7 +171,7 @@ class VPNPluginDb(vpnaas.VPNPluginBase,
 
             ipsec_site_conn_db = vpn_models.IPsecSiteConnection(
                 id=uuidutils.generate_uuid(),
-                tenant_id=ipsec_sitecon['tenant_id'],
+                project_id=ipsec_sitecon['project_id'],
                 name=ipsec_sitecon['name'],
                 description=ipsec_sitecon['description'],
                 peer_address=ipsec_sitecon['peer_address'],
@@ -299,7 +299,7 @@ class VPNPluginDb(vpnaas.VPNPluginBase,
 
     def _make_ikepolicy_dict(self, ikepolicy, fields=None):
         res = {'id': ikepolicy['id'],
-               'tenant_id': ikepolicy['tenant_id'],
+               'project_id': ikepolicy['project_id'],
                'name': ikepolicy['name'],
                'description': ikepolicy['description'],
                'auth_algorithm': ikepolicy['auth_algorithm'],
@@ -326,7 +326,7 @@ class VPNPluginDb(vpnaas.VPNPluginBase,
             validator.validate_ike_policy(context, ike)
             ike_db = vpn_models.IKEPolicy(
                 id=uuidutils.generate_uuid(),
-                tenant_id=ike['tenant_id'],
+                project_id=ike['project_id'],
                 name=ike['name'],
                 description=ike['description'],
                 auth_algorithm=ike['auth_algorithm'],
@@ -385,7 +385,7 @@ class VPNPluginDb(vpnaas.VPNPluginBase,
     def _make_ipsecpolicy_dict(self, ipsecpolicy, fields=None):
 
         res = {'id': ipsecpolicy['id'],
-               'tenant_id': ipsecpolicy['tenant_id'],
+               'project_id': ipsecpolicy['project_id'],
                'name': ipsecpolicy['name'],
                'description': ipsecpolicy['description'],
                'transform_protocol': ipsecpolicy['transform_protocol'],
@@ -412,7 +412,7 @@ class VPNPluginDb(vpnaas.VPNPluginBase,
             validator.validate_ipsec_policy(context, ipsecp)
             ipsecp_db = vpn_models.IPsecPolicy(
                 id=uuidutils.generate_uuid(),
-                tenant_id=ipsecp['tenant_id'],
+                project_id=ipsecp['project_id'],
                 name=ipsecp['name'],
                 description=ipsecp['description'],
                 transform_protocol=ipsecp['transform_protocol'],
@@ -472,7 +472,7 @@ class VPNPluginDb(vpnaas.VPNPluginBase,
         res = {'id': vpnservice['id'],
                'name': vpnservice['name'],
                'description': vpnservice['description'],
-               'tenant_id': vpnservice['tenant_id'],
+               'project_id': vpnservice['project_id'],
                'subnet_id': vpnservice['subnet_id'],
                'router_id': vpnservice['router_id'],
                'flavor_id': vpnservice['flavor_id'],
@@ -490,7 +490,7 @@ class VPNPluginDb(vpnaas.VPNPluginBase,
             validator.validate_vpnservice(context, vpns)
             vpnservice_db = vpn_models.VPNService(
                 id=uuidutils.generate_uuid(),
-                tenant_id=vpns['tenant_id'],
+                project_id=vpns['project_id'],
                 name=vpns['name'],
                 description=vpns['description'],
                 subnet_id=vpns['subnet_id'],
@@ -624,7 +624,7 @@ class VPNPluginDb(vpnaas.VPNPluginBase,
 
     def _make_endpoint_group_dict(self, endpoint_group, fields=None):
         res = {'id': endpoint_group['id'],
-               'tenant_id': endpoint_group['tenant_id'],
+               'project_id': endpoint_group['project_id'],
                'name': endpoint_group['name'],
                'description': endpoint_group['description'],
                'type': endpoint_group['endpoint_type'],
@@ -639,7 +639,7 @@ class VPNPluginDb(vpnaas.VPNPluginBase,
             validator.validate_endpoint_group(context, group)
             endpoint_group_db = vpn_models.VPNEndpointGroup(
                 id=uuidutils.generate_uuid(),
-                tenant_id=group['tenant_id'],
+                project_id=group['project_id'],
                 name=group['name'],
                 description=group['description'],
                 endpoint_type=group['type'])

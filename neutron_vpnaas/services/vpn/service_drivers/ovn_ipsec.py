@@ -353,7 +353,7 @@ class BaseOvnIPsecVPNDriver(base_ipsec.BaseIPsecVPNDriver):
         if not gw:
             gateway = {'gateway': {
                 'router_id': vpnservice['router_id'],
-                'tenant_id': vpnservice['tenant_id'],
+                'project_id': vpnservice['project_id'],
             }}
             # create_gateway may raise oslo_db.exception.DBDuplicateEntry
             # if someone else created one in the meantime
@@ -391,7 +391,7 @@ class BaseOvnIPsecVPNDriver(base_ipsec.BaseIPsecVPNDriver):
             self.make_gw_port(router_id, network_id, agent_host,
                               gateway_update)
             self.make_transit_network(router_id,
-                                      vpnservice_dict['tenant_id'],
+                                      vpnservice_dict['project_id'],
                                       agent_host,
                                       gateway_update)
         except Exception:

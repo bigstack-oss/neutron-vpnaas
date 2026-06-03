@@ -55,7 +55,7 @@ class VpnaasExtensionTestCase(base.ExtensionTestCase):
                                   'value': 3600},
                               'ike_version': 'v1',
                               'pfs': 'group5',
-                              'tenant_id': _uuid()}}
+                              'project_id': _uuid()}}
 
         return_value = copy.copy(data['ikepolicy'])
         return_value.update({'id': ikepolicy_id})
@@ -84,7 +84,7 @@ class VpnaasExtensionTestCase(base.ExtensionTestCase):
                                   'value': 3600},
                               'ike_version': 'v1',
                               'pfs': 'group5',
-                              'tenant_id': _uuid()}}
+                              'project_id': _uuid()}}
 
         return_value = copy.copy(data['ikepolicy'])
         return_value.update({'id': ikepolicy_id})
@@ -134,7 +134,7 @@ class VpnaasExtensionTestCase(base.ExtensionTestCase):
                             'value': 3600},
                         'ike_version': 'v1',
                         'pfs': 'group5',
-                        'tenant_id': _uuid(),
+                        'project_id': _uuid(),
                         'id': ikepolicy_id}
 
         instance = self.plugin.return_value
@@ -167,7 +167,7 @@ class VpnaasExtensionTestCase(base.ExtensionTestCase):
                             'value': 3600},
                         'ike_version': 'v1',
                         'pfs': 'group5',
-                        'tenant_id': _uuid(),
+                        'project_id': _uuid(),
                         'id': ikepolicy_id}
 
         instance = self.plugin.return_value
@@ -196,7 +196,7 @@ class VpnaasExtensionTestCase(base.ExtensionTestCase):
                             'value': 3600},
                         'ike_version': 'v1',
                         'pfs': 'group5',
-                        'tenant_id': _uuid(),
+                        'project_id': _uuid(),
                         'id': ikepolicy_id}
 
         instance = self.plugin.return_value
@@ -230,7 +230,7 @@ class VpnaasExtensionTestCase(base.ExtensionTestCase):
                                     'value': 3600},
                                 'transform_protocol': 'esp',
                                 'pfs': 'group5',
-                                'tenant_id': _uuid()}}
+                                'project_id': _uuid()}}
         return_value = copy.copy(data['ipsecpolicy'])
         return_value.update({'id': ipsecpolicy_id})
 
@@ -278,7 +278,7 @@ class VpnaasExtensionTestCase(base.ExtensionTestCase):
                             'value': 3600},
                         'transform_protocol': 'esp',
                         'pfs': 'group5',
-                        'tenant_id': _uuid(),
+                        'project_id': _uuid(),
                         'id': ipsecpolicy_id}
 
         instance = self.plugin.return_value
@@ -309,7 +309,7 @@ class VpnaasExtensionTestCase(base.ExtensionTestCase):
                             'value': 3600},
                         'transform_protocol': 'esp',
                         'pfs': 'group5',
-                        'tenant_id': _uuid(),
+                        'project_id': _uuid(),
                         'id': ipsecpolicy_id}
 
         instance = self.plugin.return_value
@@ -343,7 +343,7 @@ class VpnaasExtensionTestCase(base.ExtensionTestCase):
                                'description': 'descr_vpn1',
                                'router_id': _uuid(),
                                'admin_state_up': True,
-                               'tenant_id': _uuid()}}
+                               'project_id': _uuid()}}
         data['vpnservice'].update(more_args)
 
         # Add in any default values for args that were not provided
@@ -379,7 +379,7 @@ class VpnaasExtensionTestCase(base.ExtensionTestCase):
         """Test case to list all vpnservices."""
         vpnservice_id = _uuid()
         return_value = [{'name': 'vpnservice1',
-                         'tenant_id': _uuid(),
+                         'project_id': _uuid(),
                          'status': 'ACTIVE',
                          'id': vpnservice_id}]
 
@@ -401,7 +401,7 @@ class VpnaasExtensionTestCase(base.ExtensionTestCase):
                         'admin_state_up': False,
                         'subnet_id': _uuid(),
                         'router_id': _uuid(),
-                        'tenant_id': _uuid(),
+                        'project_id': _uuid(),
                         'status': "ACTIVE",
                         'id': vpnservice_id}
 
@@ -428,7 +428,7 @@ class VpnaasExtensionTestCase(base.ExtensionTestCase):
                         'admin_state_up': True,
                         'subnet_id': _uuid(),
                         'router_id': _uuid(),
-                        'tenant_id': _uuid(),
+                        'project_id': _uuid(),
                         'status': "ACTIVE",
                         'id': vpnservice_id}
 
@@ -472,7 +472,7 @@ class VpnaasExtensionTestCase(base.ExtensionTestCase):
                                       'ipsecpolicy_id': ipsecpolicy_id,
                                       'vpnservice_id': _uuid(),
                                       'admin_state_up': True,
-                                      'tenant_id': _uuid()}
+                                      'project_id': _uuid()}
         }
         data['ipsec_site_connection'].update(more_args)
 
@@ -533,7 +533,7 @@ class VpnaasExtensionTestCase(base.ExtensionTestCase):
                                       'ipsecpolicy_id': _uuid(),
                                       'vpnservice_id': _uuid(),
                                       'admin_state_up': True,
-                                      'tenant_id': _uuid()}
+                                      'project_id': _uuid()}
         }
         res = self.api.post(_get_path('vpn/ipsec-site-connections',
                                       fmt=self.fmt),
@@ -552,7 +552,7 @@ class VpnaasExtensionTestCase(base.ExtensionTestCase):
                          'auth_mode': 'psk',
                          'local_ep_group_id': None,
                          'peer_ep_group_id': None,
-                         'tenant_id': _uuid(),
+                         'project_id': _uuid(),
                          'status': 'ACTIVE',
                          'id': ipsecsite_con_id}]
 
@@ -589,7 +589,7 @@ class VpnaasExtensionTestCase(base.ExtensionTestCase):
                         'admin_state_up': False,
                         'local_ep_group_id': None,
                         'peer_ep_group_id': None,
-                        'tenant_id': _uuid(),
+                        'project_id': _uuid(),
                         'status': 'ACTIVE',
                         'id': ipsecsite_con_id}
 
@@ -630,7 +630,7 @@ class VpnaasExtensionTestCase(base.ExtensionTestCase):
                         'ipsecpolicy_id': _uuid(),
                         'vpnservice_id': _uuid(),
                         'admin_state_up': True,
-                        'tenant_id': _uuid(),
+                        'project_id': _uuid(),
                         'local_ep_group_id': None,
                         'peer_ep_group_id': None,
                         'status': 'ACTIVE',

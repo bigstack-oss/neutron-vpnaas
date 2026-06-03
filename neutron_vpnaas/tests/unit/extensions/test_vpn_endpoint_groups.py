@@ -57,7 +57,7 @@ class VpnEndpointGroupsTestCase(base.ExtensionTestCase):
         Uses passed in endpoint group information, which specifies an
         endpoint type and values.
         """
-        data['endpoint_group'].update({'tenant_id': _uuid(),
+        data['endpoint_group'].update({'project_id': _uuid(),
                                        'name': 'my endpoint group',
                                        'description': 'my description'})
         return_value = copy.copy(data['endpoint_group'])
@@ -99,7 +99,7 @@ class VpnEndpointGroupsTestCase(base.ExtensionTestCase):
         """Test show for endpoint group."""
         endpoint_group_id = _uuid()
         return_value = {'id': endpoint_group_id,
-                        'tenant_id': _uuid(),
+                        'project_id': _uuid(),
                         'name': 'my-endpoint-group',
                         'description': 'my endpoint group',
                         'type': constants.CIDR_ENDPOINT,
@@ -123,13 +123,13 @@ class VpnEndpointGroupsTestCase(base.ExtensionTestCase):
     def test_endpoint_group_list(self):
         """Test listing all endpoint groups."""
         return_value = [{'id': _uuid(),
-                         'tenant_id': _uuid(),
+                         'project_id': _uuid(),
                          'name': 'my-endpoint-group',
                          'description': 'my endpoint group',
                          'type': constants.CIDR_ENDPOINT,
                          'endpoints': ['10.10.10.0/24']},
                         {'id': _uuid(),
-                         'tenant_id': _uuid(),
+                         'project_id': _uuid(),
                          'name': 'another-endpoint-group',
                          'description': 'second endpoint group',
                          'type': constants.VLAN_ENDPOINT,
@@ -154,7 +154,7 @@ class VpnEndpointGroupsTestCase(base.ExtensionTestCase):
         endpoint_group_id = _uuid()
         update_data = {'endpoint_group': {'description': 'new description'}}
         return_value = {'id': endpoint_group_id,
-                        'tenant_id': _uuid(),
+                        'project_id': _uuid(),
                         'name': 'my-endpoint-group',
                         'description': 'new_description',
                         'type': constants.CIDR_ENDPOINT,
