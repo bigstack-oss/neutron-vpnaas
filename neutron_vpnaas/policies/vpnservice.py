@@ -10,8 +10,8 @@
 #  License for the specific language governing permissions and limitations
 #  under the License.
 
-from neutron.conf.policies import base as neutron_base
 from neutron_lib import policy as base
+from neutron_lib.policy import rules as lib_rules
 from oslo_policy import policy
 
 DEPRECATED_REASON = """
@@ -21,7 +21,7 @@ The VPaaS API now supports Secure RBAC default roles for VPN services.
 rules = [
     policy.DocumentedRuleDefault(
         name='create_vpnservice',
-        check_str=neutron_base.ADMIN_OR_PROJECT_MEMBER,
+        check_str=lib_rules.ADMIN_OR_PROJECT_MEMBER,
         scope_types=['project'],
         description='Create a VPN service',
         operations=[
@@ -38,7 +38,7 @@ rules = [
     ),
     policy.DocumentedRuleDefault(
         name='update_vpnservice',
-        check_str=neutron_base.ADMIN_OR_PROJECT_MEMBER,
+        check_str=lib_rules.ADMIN_OR_PROJECT_MEMBER,
         scope_types=['project'],
         description='Update a VPN service',
         operations=[
@@ -55,7 +55,7 @@ rules = [
     ),
     policy.DocumentedRuleDefault(
         name='delete_vpnservice',
-        check_str=neutron_base.ADMIN_OR_PROJECT_MEMBER,
+        check_str=lib_rules.ADMIN_OR_PROJECT_MEMBER,
         scope_types=['project'],
         description='Delete a VPN service',
         operations=[
@@ -72,7 +72,7 @@ rules = [
     ),
     policy.DocumentedRuleDefault(
         name='get_vpnservice',
-        check_str=neutron_base.ADMIN_OR_PROJECT_MEMBER,
+        check_str=lib_rules.ADMIN_OR_PROJECT_MEMBER,
         scope_types=['project'],
         description='Get VPN services',
         operations=[

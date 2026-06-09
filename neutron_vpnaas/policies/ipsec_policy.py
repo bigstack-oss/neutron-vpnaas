@@ -10,8 +10,8 @@
 #  License for the specific language governing permissions and limitations
 #  under the License.
 
-from neutron.conf.policies import base as neutron_base
 from neutron_lib import policy as base
+from neutron_lib.policy import rules as lib_rules
 from oslo_policy import policy
 
 DEPRECATED_REASON = """
@@ -21,7 +21,7 @@ The VPaaS API now supports Secure RBAC default roles for ipsec policies.
 rules = [
     policy.DocumentedRuleDefault(
         name='create_ipsecpolicy',
-        check_str=neutron_base.ADMIN_OR_PROJECT_MEMBER,
+        check_str=lib_rules.ADMIN_OR_PROJECT_MEMBER,
         scope_types=['project'],
         description='Create an IPsec policy',
         operations=[
@@ -38,7 +38,7 @@ rules = [
     ),
     policy.DocumentedRuleDefault(
         name='update_ipsecpolicy',
-        check_str=neutron_base.ADMIN_OR_PROJECT_MEMBER,
+        check_str=lib_rules.ADMIN_OR_PROJECT_MEMBER,
         scope_types=['project'],
         description='Update an IPsec policy',
         operations=[
@@ -55,7 +55,7 @@ rules = [
     ),
     policy.DocumentedRuleDefault(
         name='delete_ipsecpolicy',
-        check_str=neutron_base.ADMIN_OR_PROJECT_MEMBER,
+        check_str=lib_rules.ADMIN_OR_PROJECT_MEMBER,
         scope_types=['project'],
         description='Delete an IPsec policy',
         operations=[
@@ -72,7 +72,7 @@ rules = [
     ),
     policy.DocumentedRuleDefault(
         name='get_ipsecpolicy',
-        check_str=neutron_base.ADMIN_OR_PROJECT_MEMBER,
+        check_str=lib_rules.ADMIN_OR_PROJECT_MEMBER,
         scope_types=['project'],
         description='Get IPsec policies',
         operations=[
