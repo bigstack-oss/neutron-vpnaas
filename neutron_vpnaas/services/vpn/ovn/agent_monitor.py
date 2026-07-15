@@ -16,6 +16,7 @@ from neutron.plugins.ml2.drivers.ovn.agent import neutron_agent
 from neutron.plugins.ml2.drivers.ovn.mech_driver.ovsdb import ovsdb_monitor
 from neutron_lib.plugins import constants as plugin_constants
 from neutron_lib.plugins import directory
+from ovsdbapp.backend.ovs_idl import event as row_event
 
 from neutron_vpnaas.services.vpn.common import constants
 
@@ -45,8 +46,8 @@ class OVNVPNAgent(neutron_agent.NeutronAgent):
 
 
 class ChassisVPNAgentWriteEvent(ovsdb_monitor.ChassisAgentEvent):
-    events = (ovsdb_monitor.BaseEvent.ROW_CREATE,
-              ovsdb_monitor.BaseEvent.ROW_UPDATE)
+    events = (row_event.RowEvent.ROW_CREATE,
+              row_event.RowEvent.ROW_UPDATE)
 
     @staticmethod
     def _vpnagent_nb_cfg(row):
